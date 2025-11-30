@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/teo/Projects/aoc24/day1/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -o CMakeFiles/day1.dir/main.cpp.o -c /Users/teo/Projects/aoc24/day1/main.cpp",
+  "file": "/Users/teo/Projects/aoc24/day1/main.cpp",
+  "output": "CMakeFiles/day1.dir/main.cpp.o"
+}
+]
