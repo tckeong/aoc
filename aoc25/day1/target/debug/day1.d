@@ -1,0 +1,1 @@
+/Users/teo/Projects/aoc/aoc25/day1/target/debug/day1: /Users/teo/Projects/aoc/aoc25/day1/src/main.rs /Users/teo/Projects/aoc/aoc25/day1/src/solution/mod.rs /Users/teo/Projects/aoc/aoc25/day1/src/solution/p1.rs /Users/teo/Projects/aoc/aoc25/day1/src/solution/p2.rs /Users/teo/Projects/aoc/aoc25/day1/src/solution/utils.rs
