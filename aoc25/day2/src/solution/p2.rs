@@ -40,7 +40,7 @@ impl<'a> SolutionP2<'a> {
 
     fn is_invalid_id(&self, id: i64) -> bool {
         let id = id.to_string();
-        let id_length = id.to_string().len();
+        let id_length = id.len();
 
         for i in 1..id_length {
             if id_length % i != 0 {
@@ -48,10 +48,7 @@ impl<'a> SolutionP2<'a> {
             }
 
             let pattern = &id[0..i];
-            let mut constructed_id = String::new();
-            for _ in 0..(id_length / i) {
-                constructed_id.push_str(pattern);
-            }
+            let constructed_id = pattern.repeat(id_length / i);
 
             if constructed_id == id {
                 return true;
