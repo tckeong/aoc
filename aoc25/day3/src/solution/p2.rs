@@ -32,6 +32,7 @@ impl SolutionP2<'_> {
 
         let mut buf = vec![0u32; total_digits];
 
+        // Thanks for inspiration from https://github.com/wxiaoyun/advent-of-code/blob/master/2025/rust/src/day03.rs
         fn find_max_battery(buf: &mut [u32], digit: u32, idx: usize, total_digits: usize) {
             if idx >= total_digits || digit < buf[idx] {
                 return;
