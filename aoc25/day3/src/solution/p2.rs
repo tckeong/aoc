@@ -16,55 +16,43 @@ impl SolutionP2<'_> {
         let lines = read_file_to_lines(self.path)?;
         let max_batteries = lines
             .iter()
-            .enumerate()
-            .map(|(i, line)| self.find_max_batteries(line, i))
-            .sum();
+            .map(|line| self.find_max_battery_for_line(line))
+            .sum::<Option<u64>>();
 
-        Some(max_batteries)
+        max_batteries
     }
 
-    fn find_max_batteries(&self, line: &str, line_number: usize) -> u64 {
-        let line = line.chars().collect::<Vec<char>>();
-        let n = line.len();
+    fn find_max_battery_for_line(&self, line: &str) -> Option<u64> {
+        let total_digits = 12;
+        let line = line
+            .chars()
+            .map(|c| c.to_digit(10).map(|d| d))
+            .collect::<Option<Vec<u32>>>()?;
         let mut max_battery = 0;
 
-        fn backtracking(
-            line: &Vec<char>,
-            n: usize,
-            index: usize,
-            cur_size: usize,
-            cur_value: u64,
-            max_battery: &mut u64,
-        ) {
-            if cur_size == 12 {
-                *max_battery = (*max_battery).max(cur_value);
+        let mut buf = vec![0u32; total_digits];
+
+        fn find_max_battery(buf: &mut [u32], digit: u32, idx: usize, total_digits: usize) {
+            if idx >= total_digits || digit < buf[idx] {
                 return;
             }
 
-            let max_battery_value = *max_battery / 10u64.pow((12 - cur_size) as u32);
-
-            if index >= n || cur_value < max_battery_value {
-                return;
-            }
-
-            let digit = line[index].to_digit(10).unwrap() as u64;
-
-            backtracking(
-                line,
-                n,
-                index + 1,
-                cur_size + 1,
-                cur_value * 10 + digit,
-                max_battery,
-            );
-
-            backtracking(line, n, index + 1, cur_size, cur_value, max_battery);
+            let next_digit = buf[idx];
+            buf[idx] = digit;
+            find_max_battery(buf, next_digit, idx + 1, total_digits);
         }
 
-        backtracking(&line, n, 0, 0, 0, &mut max_battery);
+        for (i, &c) in line.iter().rev().enumerate() {
+            if i < total_digits {
+                buf[total_digits - 1 - i] = 0;
+            } else {
+                find_max_battery(&mut buf, c, 0, total_digits);
+            }
 
-        println!("Max battery for line {}: {}", line_number + 1, max_battery);
+            let battery = buf.iter().fold(0u64, |acc, &d| acc * 10 + d as u64);
+            max_battery = max_battery.max(battery);
+        }
 
-        max_battery
+        Some(max_battery)
     }
 }
